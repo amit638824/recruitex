@@ -1,13 +1,15 @@
-import './App.css' ;
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
-function App() { 
+import { Routes, Route } from 'react-router-dom'
+function App() {
   return (
     <>
-    <h1 className='text-danger text-center'>Welcome TO Recruitex...</h1>
+      <Routes>
+        <Route path='/' element={<>home</>} /> 
+      </Routes>
     </>
   )
 }
 
 export default App
- 

@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Routes>
-        {/* landing page */}
+        {/* landing page tm sb chor ho*/}
         <Route path='/' element={<Home />} />
         <Route path='/job' element={<FindJob />} />
         <Route path='/about' element={<About />} />

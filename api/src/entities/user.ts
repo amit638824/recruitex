@@ -6,6 +6,9 @@ export class UserTbl extends BaseEntity {
   id: any;
 
   @Column({ type: "varchar", length: 50, nullable: true })
+  type: any;
+
+  @Column({ type: "varchar", length: 50, nullable: true })
   name: any;
 
   @Column({ type: "varchar", length: 100, nullable: true })
@@ -22,9 +25,7 @@ export class UserTbl extends BaseEntity {
 
   @Column({ type: "varchar", length: 255, nullable: true })
   img: any;
-
-  @Column({ type: "varchar", length: 30, nullable: true })
-  user_type: any;
+ 
 
   @Column({ type: "varchar", length: 100, nullable: true })
   qualification: any;

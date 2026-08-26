@@ -1,11 +1,15 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaCheckCircle } from 'react-icons/fa'
+import { userLogin } from '../../services/service'
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/slices/authSlice'
+import { ToastContainer, toast } from 'react-toastify'
 
 const loginSchema = yup.object({
   email: yup.string().trim().email('Enter a valid email').required('Email is required'),
@@ -16,6 +20,8 @@ const loginSchema = yup.object({
 type LoginFormValues = yup.InferType<typeof loginSchema>
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const {
     register,
@@ -23,15 +29,24 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: yupResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      rememberMe: false,
-    },
-  })
 
-  const onSubmit = (_data: LoginFormValues) => {
-    // API wiring later
+  })
+  const onSubmit = async (data: any) => {
+    const res = await userLogin(data)
+    if (res?.success) {
+      dispatch(login(res?.result));
+      toast.success(res?.message || 'User login successfully')
+      const usertype = res?.result?.type;
+      if (usertype == 'admin') {
+        navigate('/admin-dashboard')
+      } else if (usertype == 'recruiter') {
+        navigate('/recruiter-dashboard')
+      } else if (usertype == 'seeker') {
+        navigate('/seeker-dashboard')
+      }
+    } else {
+      toast.error(res?.message || 'User login failed')
+    }
   }
 
   return (
@@ -120,6 +135,8 @@ const Login = () => {
         </div>
       </section>
       <Footer />
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   )
 }

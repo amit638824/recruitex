@@ -14,13 +14,7 @@ const Contact = () => {
       <PageHero title="Contact us" />
       <section className="contact-section">
         <div className="container">
-          <div className="d-none d-sm-block mb-5 pb-4">
-            <iframe
-              title="map"
-              src="https://maps.google.com/maps?q=california&t=&z=9&ie=UTF8&iwloc=&output=embed"
-              style={{ width: '100%', height: 480, border: 0 }}
-            />
-          </div>
+           
           <div className="row">
             <div className="col-12">
               <h2 className="contact-title">Get in Touch</h2>

@@ -35,8 +35,6 @@ const registerSchema = yup.object({
   qualification: yup.string().trim().required('Qualification is required'),
 })
 
-type RegisterFormValues = yup.InferType<typeof registerSchema>
-
 const Register = () => {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
@@ -46,24 +44,13 @@ const Register = () => {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormValues>({
+  }: any = useForm<any>({
     resolver: yupResolver(registerSchema),
-    defaultValues: {
-      type: undefined,
-      name: '',
-      email: '',
-      contact: '',
-      password: '',
-      confirmPassword: '',
-      location: '',
-      qualification: '',
-    },
   })
 
-  const onSubmit = async (data: RegisterFormValues) => {
+  const onSubmit = async (data: any) => {
     try {
-      const { confirmPassword: _confirmPassword, ...payload } = data
-      const res = await axios.post('http://localhost:9000/api/register', payload)
+      const res = await axios.post('http://localhost:9000/api/register', data)
       if (res.data?.success) {
         toast.success(res.data.message || 'User register successfully')
         reset()
@@ -72,10 +59,7 @@ const Register = () => {
         toast.error(res.data?.message || 'Registration failed')
       }
     } catch (err: unknown) {
-      const message = axios.isAxiosError(err)
-        ? err.response?.data?.message || err.message
-        : 'Internal Server error'
-      toast.error(message)
+      toast.error('Internal Server error')
     }
   }
 

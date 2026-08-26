@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import {
@@ -35,12 +38,14 @@ const registerSchema = yup.object({
 type RegisterFormValues = yup.InferType<typeof registerSchema>
 
 const Register = () => {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: yupResolver(registerSchema),
     defaultValues: {
@@ -55,8 +60,23 @@ const Register = () => {
     },
   })
 
-  const onSubmit = (_data: RegisterFormValues) => {
-    // API wiring later
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      const { confirmPassword: _confirmPassword, ...payload } = data
+      const res = await axios.post('http://localhost:9000/api/register', payload)
+      if (res.data?.success) {
+        toast.success(res.data.message || 'User register successfully')
+        reset()
+        setTimeout(() => navigate('/login'), 1200)
+      } else {
+        toast.error(res.data?.message || 'Registration failed')
+      }
+    } catch (err: unknown) {
+      const message = axios.isAxiosError(err)
+        ? err.response?.data?.message || err.message
+        : 'Internal Server error'
+      toast.error(message)
+    }
   }
 
   return (
@@ -238,7 +258,9 @@ const Register = () => {
                     </div>
                   </div>
 
-                  <button type="submit" className="btn rx-submit mt-4">Create Account</button>
+                  <button type="submit" className="btn rx-submit mt-4" disabled={isSubmitting}>
+                    {isSubmitting ? 'Creating...' : 'Create Account'}
+                  </button>
                   <p className="rx-auth-foot mb-0">
                     Already have an account? <Link to="/login">Login</Link>
                   </p>
@@ -249,6 +271,7 @@ const Register = () => {
         </div>
       </section>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   )
 }

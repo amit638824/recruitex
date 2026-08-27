@@ -4,7 +4,7 @@ export const userLogin = async (data: any) => {
     const res = await axios.post(`${baseUrl}/api/login`, data);
     return res?.data
 }
-export const userRegister = async (data: any) => {
-    const res = await axios.post(`${baseUrl}/api/register`, data);
+export const updateProfile = async (data: any) => {
+    const res = await axios.post(`${baseUrl}/api/update-profile`, data);
     return res?.data
 }

@@ -33,7 +33,7 @@ const menus: any = {
     { label: 'Update Profile', path: '/recruiter/profile', icon: <FaUserEdit /> },
   ],
 }
-
+  
 const Sidebar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()

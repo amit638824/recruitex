@@ -32,7 +32,7 @@ export const LoginUser = async (req: any, res: any) => {
             if (!isMatch) {
                 return createResponse(res, 400, false, "Invalid password", [])
             } else {
-                const token = await jwt.sign({ _id: isExist?.id, email: isExist?.email }, `${process.env?.JWT_SCRET}`, { expiresIn: "1d" })
+                const token = await jwt.sign({ id: isExist?.id, email: isExist?.email }, `${process.env?.JWT_SCRET}`, { expiresIn: "1d" })
                 return createResponse(res, 200, true, "User  login   successfully", { ...isExist, token })
             }
         }

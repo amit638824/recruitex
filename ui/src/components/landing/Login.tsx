@@ -36,7 +36,7 @@ const Login = () => {
     if (res?.success) {
       dispatch(login(res?.result));
       toast.success(res?.message || 'User login successfully')
-      const usertype = res?.result?.type;
+      const usertype = res?.result?.type;//admin||  Amin
       if (usertype == 'admin') {
         navigate('/admin-dashboard')
       } else if (usertype == 'recruiter') {

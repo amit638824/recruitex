@@ -52,6 +52,7 @@ const UpdateProfile = () => {
       const res = await updateProfile(fd)
       if (res?.success) {
         dispatch(login({ ...data, ...res.result, token: data?.token }))
+        setImgError(false)
         toast.success(res.message || 'Profile updated successfully')
       } else {
         toast.error(res?.message || 'Profile update failed')
@@ -61,7 +62,7 @@ const UpdateProfile = () => {
     }
   }
 
-  const avatarSrc = preview || (data?.img ? `http://localhost:9000/upload/${data.img}` : '')
+  const avatarSrc = preview || (data?.img ? `http://localhost:9000/uploads/${data.img}` : '')
 
   return (
     <Layout>

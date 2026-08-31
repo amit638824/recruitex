@@ -59,7 +59,7 @@ export const updateUser = async (req: any, res: any) => {
         if (password) {
             updateData.password = await bcrypt.hash(password, 10)
         }
-        const uploadDir = path.join(process.cwd(), "upload");
+        const uploadDir = path.join(__dirname, "../../uploads");
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }

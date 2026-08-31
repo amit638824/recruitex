@@ -7,8 +7,8 @@ import router from './router/router';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(fileUpload());
-app.use("/upload", express.static(path.join(process.cwd(), "upload")));
+app.use(fileUpload({ createParentPath: true }));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 const PORT = 9000;
 AppDataSource.initialize().then(() => {
     console.log("AppDataSource initialized succeessfully");

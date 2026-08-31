@@ -17,6 +17,7 @@ const menus: any = {
     { label: 'Dashboard', path: '/admin-dashboard', icon: <FaHome /> },
     { label: 'Seeker List', path: '/admin/seekerlist', icon: <FaUsers /> },
     { label: 'Recruiter List', path: '/admin/recruiterlist', icon: <FaUserTie /> },
+    { label: 'Posted Jobs', path: '/admin/joblist', icon: <FaUserTie /> },
     { label: 'Update Profile', path: '/admin/profile', icon: <FaUserEdit /> },
   ],
   seeker: [
@@ -33,13 +34,13 @@ const menus: any = {
     { label: 'Update Profile', path: '/recruiter/profile', icon: <FaUserEdit /> },
   ],
 }
-  
+
 const Sidebar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const data: any = useSelector((state: any) => state.auth)
   const userType = data?.type
-  const items = menus[userType] || []  
+  const items = menus[userType] || []
   const handleLogout = () => {
     dispatch(logOut())
     navigate('/login')
@@ -68,12 +69,12 @@ const Sidebar = () => {
           </li>
         ))}
         <button type="button" className="dash-link dash-logout" onClick={handleLogout}>
-        <span className="dash-link-icon"><FaSignOutAlt /></span>
-        LogOut
-      </button> 
+          <span className="dash-link-icon"><FaSignOutAlt /></span>
+          LogOut
+        </button>
       </ul>
 
-      
+
     </aside>
   )
 }

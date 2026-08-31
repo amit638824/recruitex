@@ -20,6 +20,7 @@ import RecruiterAppliedJob from './components/recruiter/RecruiterAppliedJob';
 import AdminUpdateProfile from './components/admin/UpdateProfile';
 import RecruiterUpdateProfile from './components/recruiter/UpdateProfile';
 import SeekerUpdateProfile from './components/seeker/UpdateProfile';
+import AdminJobList from './components/admin/AdminJobList';
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin/seekerlist" element={<SeekerList />} />
         <Route path="/admin/recruiterlist" element={<RecruiterList />} />
+        <Route path="/admin/joblist" element={<AdminJobList />} />
         <Route path="/admin/profile" element={<AdminUpdateProfile />} />
         {/* recruiter */}
         <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />

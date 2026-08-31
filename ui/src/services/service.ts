@@ -20,3 +20,10 @@ export const recruiterPostedJobs = async (token: any) => {
     });
     return res?.data
 }
+
+export const adminPostedJobsList = async (token: any) => {
+    const res = await axios.get(`${baseUrl}/api/admin-posted-jobs`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}

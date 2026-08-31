@@ -13,8 +13,8 @@ const Topbar = () => {
   const [imgError, setImgError] = useState(false)
   const data: any = useSelector((state: any) => state.auth)
   const photo = data?.type === 'recruiter'
-    ? (data?.logo || data?.company_logo || data?.img)
-    : data?.img
+    ? (data?.logo || data?.company_logo || data?.img) // for recruiter
+    : data?.img // for admin & SEEKER
 
   useEffect(() => {
     setImgError(false)

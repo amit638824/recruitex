@@ -61,33 +61,21 @@ const RecruiterList = () => {
             const photo = file ? `http://localhost:9000/uploads/${file}` : ''
             const active = !!user.status
             return (
-              <div className="col-12 col-lg-6" key={user.id}>
+              <div className="col-md-6 col-xl-4" key={user.id}>
                 <div className="uc-card recruiter">
                   <div className="uc-cover">
                     <span className={`uc-status ${active ? 'is-active' : 'is-pending'}`}>
                       <span className="job-card-dot"></span>
                       {active ? 'Active' : 'Pending'}
                     </span>
-                    <svg className="uc-skyline" viewBox="0 0 440 140" preserveAspectRatio="xMidYMax slice">
-                      <rect x="8" y="62" width="48" height="78" rx="3" fill="#9ec5ff" />
-                      <rect x="64" y="28" width="58" height="112" rx="3" fill="#c5dbff" />
-                      <rect x="130" y="46" width="44" height="94" rx="3" fill="#7eb3ff" />
-                      <rect x="182" y="16" width="70" height="124" rx="3" fill="#d6e6ff" />
-                      <rect x="260" y="40" width="52" height="100" rx="3" fill="#8fbbff" />
-                      <rect x="320" y="24" width="62" height="116" rx="3" fill="#b7d4ff" />
-                      <rect x="390" y="54" width="42" height="86" rx="3" fill="#7aaeff" />
-                      <g fill="#fff" opacity="0.45">
-                        <rect x="18" y="74" width="8" height="8" rx="1" /><rect x="32" y="74" width="8" height="8" rx="1" />
-                        <rect x="18" y="90" width="8" height="8" rx="1" /><rect x="32" y="90" width="8" height="8" rx="1" />
-                        <rect x="76" y="42" width="8" height="8" rx="1" /><rect x="90" y="42" width="8" height="8" rx="1" /><rect x="104" y="42" width="8" height="8" rx="1" />
-                        <rect x="76" y="58" width="8" height="8" rx="1" /><rect x="90" y="58" width="8" height="8" rx="1" /><rect x="104" y="58" width="8" height="8" rx="1" />
-                        <rect x="196" y="32" width="10" height="10" rx="1" /><rect x="214" y="32" width="10" height="10" rx="1" /><rect x="232" y="32" width="10" height="10" rx="1" />
-                        <rect x="196" y="50" width="10" height="10" rx="1" /><rect x="214" y="50" width="10" height="10" rx="1" /><rect x="232" y="50" width="10" height="10" rx="1" />
-                        <rect x="334" y="40" width="8" height="8" rx="1" /><rect x="348" y="40" width="8" height="8" rx="1" /><rect x="362" y="40" width="8" height="8" rx="1" />
-                      </g>
-                    </svg>
-                    <svg className="uc-wave" viewBox="0 0 500 80" preserveAspectRatio="none">
-                      <path d="M0,38 C70,78 110,8 170,42 C230,76 280,12 340,40 C400,68 450,18 500,40 L500,80 L0,80 Z" fill="#fff" />
+                    <svg className="uc-skyline" viewBox="0 0 400 130" preserveAspectRatio="none">
+                      <rect x="20" y="48" width="42" height="82" rx="2" fill="#7eb3ff" />
+                      <rect x="70" y="28" width="50" height="102" rx="2" fill="#9bc4ff" />
+                      <rect x="128" y="40" width="38" height="90" rx="2" fill="#6aa6ff" />
+                      <rect x="175" y="18" width="58" height="112" rx="2" fill="#b7d4ff" />
+                      <rect x="242" y="36" width="46" height="94" rx="2" fill="#7eb3ff" />
+                      <rect x="296" y="22" width="52" height="108" rx="2" fill="#a8ccff" />
+                      <rect x="356" y="50" width="36" height="80" rx="2" fill="#6aa6ff" />
                     </svg>
                   </div>
 

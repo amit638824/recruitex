@@ -1232,26 +1232,53 @@
   overflow: hidden;
 }
 
-.uc-cover::before,
-.uc-cover::after {
+.uc-card.seeker .uc-cover::before,
+.uc-card.seeker .uc-cover::after {
   content: "";
   position: absolute;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.16);
 }
 
-.uc-cover::before {
+.uc-card.seeker .uc-cover::before {
   width: 150px;
   height: 150px;
   top: -70px;
   left: -40px;
 }
 
-.uc-cover::after {
+.uc-card.seeker .uc-cover::after {
   width: 90px;
   height: 90px;
   top: 18px;
   right: 70px;
+}
+
+.uc-card.recruiter .uc-cover {
+  height: 112px;
+}
+
+.uc-card.recruiter .uc-avatar,
+.uc-card.recruiter .uc-avatar-wrap {
+  width: 92px;
+  height: 92px;
+}
+
+.uc-card.recruiter .uc-avatar {
+  margin: -46px auto 0;
+}
+
+.uc-card.recruiter .uc-avatar-wrap {
+  margin: -46px auto 0;
+}
+
+.uc-card.recruiter .uc-body {
+  padding: 12px 18px 18px;
+}
+
+.uc-card.recruiter .uc-body h5 {
+  font-size: 20px;
+  margin: 8px 0;
 }
 
 .uc-wave,
@@ -1272,6 +1299,10 @@
 .uc-skyline {
   height: 100%;
   opacity: 0.7;
+}
+
+.uc-card.recruiter .uc-skyline {
+  opacity: 0.45;
 }
 
 .uc-status {

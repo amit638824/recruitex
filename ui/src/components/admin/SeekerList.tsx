@@ -60,7 +60,7 @@ const SeekerList = () => {
             const photo = user.img ? `http://localhost:9000/uploads/${user.img}` : ''
             const active = !!user.status
             return (
-              <div className="col-12 col-lg-6" key={user.id}>
+              <div className="col-md-6 col-xl-4" key={user.id}>
                 <div className="uc-card seeker">
                   <div className="uc-cover">
                     <span className={`uc-status ${active ? 'is-active' : 'is-pending'}`}>

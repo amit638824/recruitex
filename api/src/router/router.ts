@@ -2,7 +2,7 @@ import express from 'express';
 import { createUser, LoginUser, updateUser } from '../controller/auth.controller';
 import { authMiddleware } from '../middleware';
 import { recruiterJobPost, recruiterPostedJobs, recruiterDashboard } from '../controller/recruiter.controller';
-import { adminPostedJobsList, adminDashboard } from '../controller/admin.controller';
+import { adminPostedJobsList, adminDashboard, adminSeekerList, adminRecruiterList } from '../controller/admin.controller';
 import { seekerApplyJob, seekerDashboard } from '../controller/seeker.controller';
 const router = express.Router();
 // common 
@@ -17,6 +17,8 @@ router.get("/recruiter-dashboard", authMiddleware, recruiterDashboard)
 //admin route
 router.get("/admin-posted-jobs",authMiddleware,adminPostedJobsList)
 router.get("/admin-dashboard", authMiddleware, adminDashboard)
+router.get("/admin-seeker-list", authMiddleware, adminSeekerList)
+router.get("/admin-recruiter-list", authMiddleware, adminRecruiterList)
 router.get("/jobs", adminPostedJobsList)
 // seeker
 router.post("/seeker-apply-job", authMiddleware, seekerApplyJob)

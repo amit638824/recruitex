@@ -55,3 +55,15 @@ export const adminDashboardApi = async (token: any) => {
     });
     return res?.data
 }
+export const adminSeekerListApi = async (token: any) => {
+    const res = await axios.get(`${baseUrl}/api/admin-seeker-list`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}
+export const adminRecruiterListApi = async (token: any) => {
+    const res = await axios.get(`${baseUrl}/api/admin-recruiter-list`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}

@@ -20,6 +20,32 @@ export const adminPostedJobsList = async (req: any, res: any) => {
     }
 }
 
+export const adminSeekerList = async (_req: any, res: any) => {
+    try {
+        const result = await UserTbl.find({
+            where: { type: "seeker" },
+            select: ["id", "name", "email", "contact", "location", "img", "qualification", "preference", "resume", "status", "created_at"],
+            order: { created_at: "DESC" },
+        })
+        return createResponse(res, 200, true, "Seeker list fetched successfully", result)
+    } catch (err) {
+        return createResponse(res, 500, false, "Internal Server error", err)
+    }
+}
+
+export const adminRecruiterList = async (_req: any, res: any) => {
+    try {
+        const result = await UserTbl.find({
+            where: { type: "recruiter" },
+            select: ["id", "name", "email", "contact", "location", "img", "company_logo", "status", "created_at"],
+            order: { created_at: "DESC" },
+        })
+        return createResponse(res, 200, true, "Recruiter list fetched successfully", result)
+    } catch (err) {
+        return createResponse(res, 500, false, "Internal Server error", err)
+    }
+}
+
 export const adminDashboard = async (_req: any, res: any) => {
     try {
         const seekers = await UserTbl.count({ where: { type: "seeker" } })

@@ -50,6 +50,7 @@ export const seekerDashboard = async (req: any, res: any) => {
             })
             .setParameter("seeker_id", seeker_id)
             .orderBy("job.created_at", "DESC")
+            .addOrderBy("job.id", "DESC")
             .limit(5)
             .getMany()
         return createResponse(res, 200, true, "Seeker dashboard fetched successfully", {

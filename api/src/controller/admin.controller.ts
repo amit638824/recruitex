@@ -13,6 +13,8 @@ export const adminPostedJobsList = async (req: any, res: any) => {
                 "user.name ",
                 "user.company_logo",
             ])
+            .orderBy("job.created_at", "DESC")
+            .addOrderBy("job.id", "DESC")
         const result = await db.getRawMany()
         return createResponse(res, 200, true, "Posted jobs fetched successfully", result)
     } catch (err) {
@@ -53,7 +55,7 @@ export const adminDashboard = async (_req: any, res: any) => {
         const jobs = await JobTbl.count()
         const applications = await AppliedJobTbl.count()
         const pendingJobs = await JobTbl.count({ where: { status: "pending" } })
-        const recentJobs = await JobTbl.find({ order: { created_at: "DESC" }, take: 5 })
+        const recentJobs = await JobTbl.find({ order: { created_at: "DESC", id: "DESC" }, take: 5 })
         return createResponse(res, 200, true, "Admin dashboard fetched successfully", {
             seekers,
             recruiters,

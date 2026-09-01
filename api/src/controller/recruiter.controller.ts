@@ -33,7 +33,7 @@ export const recruiterPostedJobs = async (req: any, res: any) => {
         const recruiter_id = req.user?.id || req.user?._id;
         const result = await JobTbl.find({
             where: { recruiter_id },
-            order: { created_at: "DESC" },
+            order: { created_at: "DESC", id: "DESC" },
         })
         return createResponse(res, 200, true, "Posted jobs fetched successfully", result)
     } catch (err) {
@@ -61,7 +61,7 @@ export const recruiterDashboard = async (req: any, res: any) => {
             .getCount()
         const latestJobs = await JobTbl.find({
             where: { recruiter_id },
-            order: { created_at: "DESC" },
+            order: { created_at: "DESC", id: "DESC" },
             take: 5,
         })
         return createResponse(res, 200, true, "Recruiter dashboard fetched successfully", {

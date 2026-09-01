@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa'
 import Layout from '../layout/Layout'
 import { adminPostedJobsList, seekerAppliedJob } from '../../services/service'
+import { useNavigate } from 'react-router-dom'
 
 const formatDate = (value: any) => {
   if (!value) return ''
@@ -26,7 +27,7 @@ const JobApply = () => {
   const data: any = useSelector((state: any) => state.auth)
   const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-
+  const nav = useNavigate()
   useEffect(() => {
     const load = async () => {
       try {
@@ -46,6 +47,7 @@ const JobApply = () => {
     const res = await seekerAppliedJob(payload, data?.token)
     if (res?.success) {
       toast.success(res?.message)
+      nav('/seeker/appliedjob')
     } else {
       toast.error(res?.message)
     }
@@ -78,10 +80,10 @@ const JobApply = () => {
                   <p className="sj-cat">{job.category}</p>
                   <p className="sj-recruiter"><FaBuilding /> {job.name || job.user_name || 'Recruiter'}</p>
                 </div>
-                <span className={`job-card-badge ${job.status === 'pending' ? 'is-pending' : 'is-active'}`}>
+                {/* <span className={`job-card-badge ${job.status === 'pending' ? 'is-pending' : 'is-active'}`}>
                   <span className="job-card-dot"></span>
                   {job.status}
-                </span>
+                </span> */}
               </div>
 
               <div className="sj-meta">

@@ -3,7 +3,7 @@ import { createUser, LoginUser, updateUser } from '../controller/auth.controller
 import { authMiddleware } from '../middleware';
 import { recruiterJobPost, recruiterPostedJobs, recruiterDashboard } from '../controller/recruiter.controller';
 import { adminPostedJobsList, adminDashboard, adminSeekerList, adminRecruiterList } from '../controller/admin.controller';
-import { seekerAppliedJob, seekerApplyJob, seekerDashboard } from '../controller/seeker.controller';
+import { getSeekerAppliedJob, seekerAppliedJob, seekerApplyJob, seekerDashboard } from '../controller/seeker.controller';
 const router = express.Router();
 // common 
 router.post("/register", createUser) //admin ko register nhi kiya jata h (manual db ) 
@@ -24,4 +24,5 @@ router.get("/jobs", adminPostedJobsList)
 router.post("/seeker-apply-job", authMiddleware, seekerApplyJob)
 router.get("/seeker-dashboard", authMiddleware, seekerDashboard)
 router.post("/seeker-applied-job", authMiddleware, seekerAppliedJob)
+router.get("/seeker-applied-job", authMiddleware, getSeekerAppliedJob)
 export default router;

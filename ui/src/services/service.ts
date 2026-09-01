@@ -74,3 +74,10 @@ export const seekerAppliedJob = async (data:any,token: any) => {
     });
     return res?.data
 }
+
+export const getseekerAppliedJobList = async (token: any) => {
+    const res = await axios.get(`${baseUrl}/api/seeker-applied-job`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}

@@ -1,7 +1,31 @@
 import { JobTbl } from "../entities/job";
 import { AppliedJobTbl } from "../entities/applied";
 import { createResponse } from "../helper/utils";
-
+import { UserTbl } from "../entities/user";
+export const getAppliedJobList = async (req: any, res: any) => {
+    try {
+        
+        const db = AppliedJobTbl.createQueryBuilder('ap')
+            .leftJoin(JobTbl, "job", 'job.id=ap.job_id')
+            .leftJoin(UserTbl, "user", 'user.id=ap.seeker_id')
+            .leftJoin(UserTbl, "rec", 'rec.id=job.recruiter_id')
+            .select([
+                "ap.id as appied_id",
+                "job.*",
+                "user.name as seeker_name",
+                "user.img as seeker_profile",
+                "user.resume as seeker_resume",
+                "user.qualification as seeker_qualification",
+                "rec.name as recruiter_name",
+                "rec.company_logo as recruiter_logo",
+            ])
+            // .where({ seeker_id: seeker_id })
+        const result = await db.getRawMany()
+        return createResponse(res, 201, true, "Applied successfully", result)
+    } catch (err) {
+        return createResponse(res, 500, false, "Internal Server error", [])
+    }
+}
 export const recruiterJobPost = async (req: any, res: any) => {
     try {
         const recruiter_id = req.user?.id || req.user?._id;

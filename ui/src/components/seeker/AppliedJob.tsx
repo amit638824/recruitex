@@ -41,8 +41,6 @@ const AppliedJob = () => {
     load()
   }, [data?.token])
 
-  console.log(jobs, "##########################");
-
   return (
     <Layout>
       <div className="dash-welcome d-flex align-items-center flex-wrap gap-2">
@@ -94,7 +92,7 @@ const AppliedJob = () => {
                   <span>Open Positions</span>
                   <strong>{job.vacancies} open</strong>
                 </div>
-                <div> 
+                <div>
 
                   {job.status}
                 </div>

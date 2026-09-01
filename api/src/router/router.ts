@@ -1,7 +1,7 @@
 import express from 'express';
 import { createUser, LoginUser, updateUser } from '../controller/auth.controller';
 import { authMiddleware } from '../middleware';
-import { recruiterJobPost, recruiterPostedJobs, recruiterDashboard } from '../controller/recruiter.controller';
+import { recruiterJobPost, recruiterPostedJobs, recruiterDashboard, getAppliedJobList } from '../controller/recruiter.controller';
 import { adminPostedJobsList, adminDashboard, adminSeekerList, adminRecruiterList } from '../controller/admin.controller';
 import { getSeekerAppliedJob, seekerAppliedJob, seekerApplyJob, seekerDashboard } from '../controller/seeker.controller';
 const router = express.Router();
@@ -13,7 +13,7 @@ router.post("/update-profile", updateUser)
 router.post("/recruiter-job-post", authMiddleware, recruiterJobPost)
 router.get("/recruiter-posted-jobs", authMiddleware, recruiterPostedJobs)
 router.get("/recruiter-dashboard", authMiddleware, recruiterDashboard)
-
+router.get("/recruiter-applied-job", authMiddleware, getAppliedJobList)
 //admin route
 router.get("/admin-posted-jobs",authMiddleware,adminPostedJobsList)
 router.get("/admin-dashboard", authMiddleware, adminDashboard)

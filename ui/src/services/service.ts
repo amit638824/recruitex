@@ -67,3 +67,10 @@ export const adminRecruiterListApi = async (token: any) => {
     });
     return res?.data
 }
+
+export const seekerAppliedJob = async (data:any,token: any) => {
+    const res = await axios.post(`${baseUrl}/api/seeker-applied-job`,data, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}

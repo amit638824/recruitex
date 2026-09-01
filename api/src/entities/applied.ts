@@ -11,7 +11,7 @@ export class AppliedJobTbl extends BaseEntity {
   @Column({ type: "int" })
   seeker_id: any;
 
-  @Column({ type: "varchar", length: 50, default: "pending" })
+  @Column({ type: "varchar", length: 50, default: "pending" })  // pending | reject | hire
   status: any;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

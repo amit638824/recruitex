@@ -9,11 +9,9 @@ import {
   FaBuilding,
   FaCalendarAlt,
   FaBriefcase,
-  FaHeart,
-  FaRegHeart,
 } from 'react-icons/fa'
 import Layout from '../layout/Layout'
-import { adminPostedJobsList, seekerApplyJob } from '../../services/service'
+import { adminPostedJobsList, seekerAppliedJob } from '../../services/service'
 
 const formatDate = (value: any) => {
   if (!value) return ''
@@ -28,8 +26,6 @@ const JobApply = () => {
   const data: any = useSelector((state: any) => state.auth)
   const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [wishlist, setWishlist] = useState<any[]>([])
-  const [applying, setApplying] = useState<any>(null)
 
   useEffect(() => {
     const load = async () => {
@@ -45,24 +41,14 @@ const JobApply = () => {
     load()
   }, [data?.token])
 
-  const handleApply = async (jobId: any) => {
-    try {
-      setApplying(jobId)
-      const res = await seekerApplyJob({ job_id: jobId }, data?.token)
-      if (res?.success) {
-        toast.success(res.message || 'Applied successfully')
-      } else {
-        toast.error(res?.message || 'Apply failed')
-      }
-    } catch {
-      toast.error('Internal Server error')
-    } finally {
-      setApplying(null)
+  const handleapplyJob = async (job_id: any) => {
+    const payload = { job_id }
+    const res = await seekerAppliedJob(payload, data?.token)
+    if (res?.success) {
+      toast.success(res?.message)
+    } else {
+      toast.error(res?.message)
     }
-  }
-
-  const toggleWish = (jobId: any) => {
-    setWishlist((prev) => prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId])
   }
 
   return (
@@ -128,21 +114,13 @@ const JobApply = () => {
               </div>
               <div className="sj-actions">
                 <button
+                  onClick={() => handleapplyJob(job?.id)}
                   type="button"
                   className="btn sj-apply"
-                  disabled={applying === job.id}
-                  onClick={() => handleApply(job.id)}
                 >
-                  <FaBriefcase /> {applying === job.id ? 'Applying...' : 'Apply This Job'}
+                  <FaBriefcase /> Apply This Job
                 </button>
-                <button
-                  type="button"
-                  className={`sj-wish ${wishlist.includes(job.id) ? 'active' : ''}`}
-                  onClick={() => toggleWish(job.id)}
-                  aria-label="Wishlist"
-                >
-                  {wishlist.includes(job.id) ? <FaHeart /> : <FaRegHeart />}
-                </button>
+
               </div>
             </div>
           </div>

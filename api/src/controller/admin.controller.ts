@@ -1,6 +1,6 @@
-import { userInfo } from "node:os";
 import { JobTbl } from "../entities/job";
 import { UserTbl } from "../entities/user";
+import { AppliedJobTbl } from "../entities/applied";
 import { createResponse } from "../helper/utils";
 
 export const adminPostedJobsList = async (req: any, res: any) => {
@@ -17,6 +17,27 @@ export const adminPostedJobsList = async (req: any, res: any) => {
         return createResponse(res, 200, true, "Posted jobs fetched successfully", result)
     } catch (err) {
         return createResponse(res, 500, false, "Internal Server error", err)
+    }
+}
+
+export const adminDashboard = async (_req: any, res: any) => {
+    try {
+        const seekers = await UserTbl.count({ where: { type: "seeker" } })
+        const recruiters = await UserTbl.count({ where: { type: "recruiter" } })
+        const jobs = await JobTbl.count()
+        const applications = await AppliedJobTbl.count()
+        const pendingJobs = await JobTbl.count({ where: { status: "pending" } })
+        const recentJobs = await JobTbl.find({ order: { created_at: "DESC" }, take: 5 })
+        return createResponse(res, 200, true, "Admin dashboard fetched successfully", {
+            seekers,
+            recruiters,
+            jobs,
+            applications,
+            pendingJobs,
+            recentJobs,
+        })
+    } catch (err) {
+        return createResponse(res, 500, false, "Internal Server error", [])
     }
 }
 

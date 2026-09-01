@@ -1,30 +1,29 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { FaBriefcase, FaBookmark, FaEye, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaBriefcase, FaCheckCircle, FaTimesCircle, FaHourglassHalf, FaMapMarkerAlt } from 'react-icons/fa'
 import Layout from '../layout/Layout'
-
-const stats = [
-  { label: 'Applications', value: '24', icon: <FaBriefcase />, growth: '12%' },
-  { label: 'Saved Jobs', value: '18', icon: <FaBookmark />, growth: '8%' },
-  { label: 'Profile Views', value: '156', icon: <FaEye />, growth: '24%' },
-  { label: 'Messages', value: '09', icon: <FaEnvelope />, growth: '5%' },
-]
-
-const applied = [
-  { title: 'Frontend Developer', company: 'TechNova', status: 'Under Review', date: '2 days ago' },
-  { title: 'React Engineer', company: 'Pixel Labs', status: 'Shortlisted', date: '5 days ago' },
-  { title: 'UI Developer', company: 'BrightSoft', status: 'Applied', date: '1 week ago' },
-]
-
-const recommended = [
-  { title: 'MERN Stack Developer', company: 'CodeCraft', location: 'Remote' },
-  { title: 'JavaScript Engineer', company: 'Cloudify', location: 'Bengaluru' },
-  { title: 'Web Designer', company: 'Studio 9', location: 'Pune' },
-]
+import { seekerDashboardApi } from '../../services/service'
 
 const SeekerDashboard = () => {
   const data: any = useSelector((state: any) => state.auth)
   const firstName = (data?.name || 'Seeker').split(' ')[0]
+  const [dash, setDash] = useState<any>({})
+
+  useEffect(() => {
+    const load = async () => {
+      const res = await seekerDashboardApi(data?.token)
+      if (res?.success) setDash(res.result || {})
+    }
+    if (data?.token) load()
+  }, [data?.token])
+
+  const stats = [
+    { label: 'Applications', value: dash.applications || 0, icon: <FaBriefcase /> },
+    { label: 'Pending', value: dash.pending || 0, icon: <FaHourglassHalf /> },
+    { label: 'Hired', value: dash.hired || 0, icon: <FaCheckCircle /> },
+    { label: 'Rejected', value: dash.rejected || 0, icon: <FaTimesCircle /> },
+  ]
 
   return (
     <Layout>
@@ -41,7 +40,6 @@ const SeekerDashboard = () => {
               <div>
                 <small>{item.label}</small>
                 <h4>{item.value}</h4>
-                <span className="dash-stat-growth">↗ {item.growth} this month</span>
               </div>
             </div>
           </div>
@@ -84,30 +82,37 @@ const SeekerDashboard = () => {
         <div className="col-lg-6">
           <div className="dash-panel">
             <h5>Recently Applied Jobs</h5>
-            {applied.map((job) => (
-              <div className="dash-job-row" key={job.title}>
-                <div>
-                  <strong>{job.title}</strong>
-                  <small>{job.company}</small>
+            {(dash.recentApplied || []).length === 0 ? (
+              <p className="mb-0">No applications yet.</p>
+            ) : (
+              dash.recentApplied.map((job: any) => (
+                <div className="dash-job-row" key={job.id}>
+                  <div>
+                    <strong>{job.job_title}</strong>
+                    <small>{job.recruiter_name}</small>
+                  </div>
+                  <span className="dash-status">{job.status}</span>
                 </div>
-                <span className="dash-status">{job.status}</span>
-                <small className="dash-job-date">{job.date}</small>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
         <div className="col-lg-6">
           <div className="dash-panel">
             <h5>Recommended Jobs</h5>
-            {recommended.map((job) => (
-              <div className="dash-job-row" key={job.title}>
-                <div>
-                  <strong>{job.title}</strong>
-                  <small><FaMapMarkerAlt /> {job.location}</small>
+            {(dash.recommended || []).length === 0 ? (
+              <p className="mb-0">No recommended jobs.</p>
+            ) : (
+              dash.recommended.map((job: any) => (
+                <div className="dash-job-row" key={job.id}>
+                  <div>
+                    <strong>{job.job_title}</strong>
+                    <small><FaMapMarkerAlt /> {job.job_location}</small>
+                  </div>
+                  <Link to="/seeker/jobapply" className="btn dash-apply-btn">Apply Now</Link>
                 </div>
-                <Link to="/seeker/jobapply" className="btn dash-apply-btn">Apply Now</Link>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

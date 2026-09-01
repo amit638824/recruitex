@@ -1,24 +1,29 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FaUsers, FaUserTie, FaBriefcase, FaCheckCircle } from 'react-icons/fa'
 import Layout from '../layout/Layout'
-
-const stats = [
-  { label: 'Seekers', value: '128', icon: <FaUsers />, growth: '9%' },
-  { label: 'Recruiters', value: '46', icon: <FaUserTie />, growth: '7%' },
-  { label: 'Jobs', value: '64', icon: <FaBriefcase />, growth: '15%' },
-  { label: 'Applications', value: '312', icon: <FaCheckCircle />, growth: '11%' },
-]
-
-const activity = [
-  { title: 'New seeker registrations', company: 'Platform', status: '18 Today', date: 'Today' },
-  { title: 'New recruiter accounts', company: 'Platform', status: '4 Today', date: 'Today' },
-  { title: 'Jobs pending review', company: 'Moderation', status: '6 Open', date: 'This week' },
-]
+import { adminDashboardApi } from '../../services/service'
 
 const AdminDashboard = () => {
   const data: any = useSelector((state: any) => state.auth)
   const firstName = (data?.name || 'Admin').split(' ')[0]
+  const [dash, setDash] = useState<any>({})
+
+  useEffect(() => {
+    const load = async () => {
+      const res = await adminDashboardApi(data?.token)
+      if (res?.success) setDash(res.result || {})
+    }
+    if (data?.token) load()
+  }, [data?.token])
+
+  const stats = [
+    { label: 'Seekers', value: dash.seekers || 0, icon: <FaUsers /> },
+    { label: 'Recruiters', value: dash.recruiters || 0, icon: <FaUserTie /> },
+    { label: 'Jobs', value: dash.jobs || 0, icon: <FaBriefcase /> },
+    { label: 'Applications', value: dash.applications || 0, icon: <FaCheckCircle /> },
+  ]
 
   return (
     <Layout>
@@ -35,7 +40,6 @@ const AdminDashboard = () => {
               <div>
                 <small>{item.label}</small>
                 <h4>{item.value}</h4>
-                <span className="dash-stat-growth">↗ {item.growth} this month</span>
               </div>
             </div>
           </div>
@@ -77,17 +81,20 @@ const AdminDashboard = () => {
       <div className="row">
         <div className="col-lg-6">
           <div className="dash-panel">
-            <h5>Recent Activity</h5>
-            {activity.map((item) => (
-              <div className="dash-job-row" key={item.title}>
-                <div>
-                  <strong>{item.title}</strong>
-                  <small>{item.company}</small>
+            <h5>Recent Jobs</h5>
+            {(dash.recentJobs || []).length === 0 ? (
+              <p className="mb-0">No jobs yet.</p>
+            ) : (
+              dash.recentJobs.map((job: any) => (
+                <div className="dash-job-row" key={job.id}>
+                  <div>
+                    <strong>{job.job_title}</strong>
+                    <small>{job.job_location} · {job.category}</small>
+                  </div>
+                  <span className="dash-status">{job.status}</span>
                 </div>
-                <span className="dash-status">{item.status}</span>
-                <small className="dash-job-date">{item.date}</small>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
         <div className="col-lg-6">

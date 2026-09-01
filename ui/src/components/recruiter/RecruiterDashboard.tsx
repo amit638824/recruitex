@@ -1,24 +1,29 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { FaBriefcase, FaUsers, FaCheckCircle, FaEnvelope } from 'react-icons/fa'
+import { FaBriefcase, FaUsers, FaCheckCircle, FaHourglassHalf } from 'react-icons/fa'
 import Layout from '../layout/Layout'
-
-const stats = [
-  { label: 'Jobs Posted', value: '12', icon: <FaBriefcase />, growth: '10%' },
-  { label: 'Applications', value: '86', icon: <FaUsers />, growth: '18%' },
-  { label: 'Shortlisted', value: '14', icon: <FaCheckCircle />, growth: '6%' },
-  { label: 'Messages', value: '11', icon: <FaEnvelope />, growth: '4%' },
-]
-
-const posts = [
-  { title: 'Senior React Developer', company: 'New applications', status: '12 Applied', date: 'Today' },
-  { title: 'UI/UX Designer', company: 'New applications', status: '8 Applied', date: 'Yesterday' },
-  { title: 'Backend Engineer', company: 'New applications', status: '21 Applied', date: '3 days ago' },
-]
+import { recruiterDashboardApi } from '../../services/service'
 
 const RecruiterDashboard = () => {
   const data: any = useSelector((state: any) => state.auth)
   const firstName = (data?.name || 'Recruiter').split(' ')[0]
+  const [dash, setDash] = useState<any>({})
+
+  useEffect(() => {
+    const load = async () => {
+      const res = await recruiterDashboardApi(data?.token)
+      if (res?.success) setDash(res.result || {})
+    }
+    if (data?.token) load()
+  }, [data?.token])
+
+  const stats = [
+    { label: 'Jobs Posted', value: dash.jobsPosted || 0, icon: <FaBriefcase /> },
+    { label: 'Applications', value: dash.applications || 0, icon: <FaUsers /> },
+    { label: 'Hired', value: dash.hired || 0, icon: <FaCheckCircle /> },
+    { label: 'Pending', value: dash.pending || 0, icon: <FaHourglassHalf /> },
+  ]
 
   return (
     <Layout>
@@ -35,7 +40,6 @@ const RecruiterDashboard = () => {
               <div>
                 <small>{item.label}</small>
                 <h4>{item.value}</h4>
-                <span className="dash-stat-growth">↗ {item.growth} this month</span>
               </div>
             </div>
           </div>
@@ -78,21 +82,24 @@ const RecruiterDashboard = () => {
         <div className="col-lg-6">
           <div className="dash-panel">
             <h5>Latest Job Posts</h5>
-            {posts.map((job) => (
-              <div className="dash-job-row" key={job.title}>
-                <div>
-                  <strong>{job.title}</strong>
-                  <small>{job.company}</small>
+            {(dash.latestJobs || []).length === 0 ? (
+              <p className="mb-0">No jobs posted yet.</p>
+            ) : (
+              dash.latestJobs.map((job: any) => (
+                <div className="dash-job-row" key={job.id}>
+                  <div>
+                    <strong>{job.job_title}</strong>
+                    <small>{job.job_location} · {job.job_type}</small>
+                  </div>
+                  <span className="dash-status">{job.status}</span>
                 </div>
-                <span className="dash-status">{job.status}</span>
-                <small className="dash-job-date">{job.date}</small>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
         <div className="col-lg-6">
           <div className="dash-panel">
-            <h5>Hiring Tips</h5>
+            <h5>Quick Actions</h5>
             <div className="dash-job-row">
               <div>
                 <strong>Post a new opening</strong>

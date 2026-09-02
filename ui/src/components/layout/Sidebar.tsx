@@ -17,7 +17,8 @@ const menus: any = {
     { label: 'Dashboard', path: '/admin-dashboard', icon: <FaHome /> },
     { label: 'Seeker List', path: '/admin/seekerlist', icon: <FaUsers /> },
     { label: 'Recruiter List', path: '/admin/recruiterlist', icon: <FaUserTie /> },
-    { label: 'Posted Jobs', path: '/admin/joblist', icon: <FaUserTie /> },
+    { label: 'Posted Jobs', path: '/admin/joblist', icon: <FaBriefcase /> },
+    { label: 'Applied Jobs', path: '/admin/appliedjob', icon: <FaCheckCircle /> },
     { label: 'Update Profile', path: '/admin/profile', icon: <FaUserEdit /> },
   ],
   seeker: [

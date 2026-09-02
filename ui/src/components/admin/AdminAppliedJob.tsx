@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useSelector } from 'react-redux'
-import { toast, ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import {
   FaMapMarkerAlt,
   FaClock,
@@ -13,11 +13,10 @@ import {
   FaUserGraduate,
   FaFileAlt,
   FaBriefcase,
-  FaCheck,
-  FaTimes,
+  FaUserTie,
 } from 'react-icons/fa'
 import Layout from '../layout/Layout'
-import { getrecruterAppliedJobList, updateRecruiterAppliedJobStatus } from '../../services/service'
+import { adminAppliedJobListApi } from '../../services/service'
 
 const UPLOAD_BASE = 'http://localhost:9000/uploads'
 
@@ -73,16 +72,15 @@ const JobChip = ({
   </div>
 )
 
-const RecruiterAppliedJob = () => {
+const AdminAppliedJob = () => {
   const data: any = useSelector((state: any) => state.auth)
   const [applications, setApplications] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [updatingId, setUpdatingId] = useState<number | null>(null)
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await getrecruterAppliedJobList(data?.token)
+        const res = await adminAppliedJobListApi(data?.token)
         if (res?.success) {
           setApplications(res.result || [])
         }
@@ -93,36 +91,15 @@ const RecruiterAppliedJob = () => {
     load()
   }, [data?.token])
 
-  const handleStatus = async (appliedId: number, status: 'hired' | 'rejected') => {
-    if (!appliedId || updatingId) return
-    setUpdatingId(appliedId)
-    try {
-      const res = await updateRecruiterAppliedJobStatus(appliedId, status, data?.token)
-      if (res?.success) {
-        setApplications((prev) =>
-          prev.map((row) =>
-            Number(row.applied_id) === Number(appliedId)
-              ? { ...row, application_status: status }
-              : row,
-          ),
-        )
-        toast.success(res.message || `Marked as ${status}`)
-      } else {
-        toast.error(res?.message || 'Failed to update status')
-      }
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Failed to update status')
-    } finally {
-      setUpdatingId(null)
-    }
-  }
-
   return (
     <Layout>
       <div className="dash-welcome d-flex align-items-center flex-wrap gap-2">
-        <h2 className="mb-0">Applied Candidates</h2>
+        <h2 className="mb-0">Applied Jobs</h2>
         <span className="sj-count">{applications.length} Applications</span>
       </div>
+      <p className="mb-3 text-muted" style={{ color: '#8b95a7' }}>
+        See which seeker applied on which job (all recruiters).
+      </p>
 
       {loading ? (
         <div className="dash-panel"><p className="mb-0">Loading...</p></div>
@@ -137,7 +114,6 @@ const RecruiterAppliedJob = () => {
             ? `${UPLOAD_BASE}/${row.seeker_resume}`
             : null
           const appStatus = String(row.application_status || 'pending').toLowerCase()
-          const busy = updatingId === Number(row.applied_id)
 
           return (
             <article className="rac-card" key={row.applied_id || `${row.job_id}-${row.seeker_id}`}>
@@ -152,6 +128,10 @@ const RecruiterAppliedJob = () => {
                     <p className="rac-sub">
                       <FaBuilding /> {row.category || 'General'} · {row.job_type || '—'}
                     </p>
+                    <p className="rac-sub">
+                      <FaUserTie /> Recruiter: <strong style={{ color: '#1a2340' }}>{row.recruiter_name || '—'}</strong>
+                      {row.recruiter_email ? ` · ${row.recruiter_email}` : ''}
+                    </p>
                   </div>
                 </div>
 
@@ -159,24 +139,6 @@ const RecruiterAppliedJob = () => {
                   <span className={statusClass(appStatus)}>{appStatus}</span>
                   <div className="rac-applied-date">
                     <FaCalendarAlt /> Applied on <strong>{formatDate(row.applied_at)}</strong>
-                  </div>
-                  <div className="rac-actions">
-                    <button
-                      type="button"
-                      className="rac-btn rac-btn-hire"
-                      disabled={busy || appStatus === 'hired'}
-                      onClick={() => handleStatus(Number(row.applied_id), 'hired')}
-                    >
-                      <FaCheck /> Hired
-                    </button>
-                    <button
-                      type="button"
-                      className="rac-btn rac-btn-reject"
-                      disabled={busy || appStatus === 'rejected'}
-                      onClick={() => handleStatus(Number(row.applied_id), 'rejected')}
-                    >
-                      <FaTimes /> Reject
-                    </button>
                   </div>
                 </div>
               </div>
@@ -228,4 +190,4 @@ const RecruiterAppliedJob = () => {
   )
 }
 
-export default RecruiterAppliedJob
+export default AdminAppliedJob

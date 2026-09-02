@@ -1065,6 +1065,351 @@
   color: #1a2340;
 }
 
+.sj-section-label {
+  margin: 14px 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a94a6;
+}
+
+.sj-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.sj-badge-pending {
+  background: #fff4e5;
+  color: #b76e00;
+}
+
+.sj-badge-hired {
+  background: #e8f8ef;
+  color: #1b7a45;
+}
+
+.sj-badge-reject {
+  background: #fdecec;
+  color: #c62828;
+}
+
+.sj-card-applied .sj-meta a {
+  color: #fb246a;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.sj-card-applied .sj-meta a:hover {
+  text-decoration: underline;
+}
+
+/* Recruiter Applied Candidate card */
+.rac-card {
+  background: #fff;
+  border: 1px solid #e8ecf2;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(26, 35, 64, 0.06);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.rac-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 22px 8px;
+  flex-wrap: wrap;
+}
+
+.rac-identity {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.rac-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #1a2340;
+  flex-shrink: 0;
+}
+
+.rac-identity h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a2340;
+}
+
+.rac-applied-for {
+  margin: 4px 0 2px;
+  color: #5b6577;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rac-applied-for svg,
+.rac-sub svg {
+  color: #fb246a;
+}
+
+.rac-applied-for strong {
+  color: #fb246a;
+}
+
+.rac-sub {
+  margin: 0;
+  color: #8b95a7;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rac-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.rac-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.rac-badge-pending {
+  background: #fff4e5;
+  color: #b76e00;
+}
+
+.rac-badge-hired {
+  background: #e8f8ef;
+  color: #1b7a45;
+}
+
+.rac-badge-reject {
+  background: #fdecec;
+  color: #c62828;
+}
+
+.rac-applied-date {
+  color: #8b95a7;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rac-applied-date svg {
+  color: #fb246a;
+}
+
+.rac-applied-date strong {
+  color: #1a2340;
+}
+
+.rac-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.rac-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.rac-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.rac-btn-hire {
+  background: #1b7a45;
+  color: #fff;
+}
+
+.rac-btn-reject {
+  background: #c62828;
+  color: #fff;
+}
+
+.rac-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.rac-section {
+  padding: 8px 22px 6px;
+}
+
+.rac-section h4 {
+  margin: 10px 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1a2340;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.rac-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 18px;
+  margin-bottom: 8px;
+}
+
+.rac-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.rac-info-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #ffe8f0;
+  color: #fb246a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+.rac-info-label {
+  display: block;
+  color: #8b95a7;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.rac-info-value {
+  display: block;
+  color: #1a2340;
+  font-size: 14px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.rac-info-value a {
+  color: #fb246a;
+  text-decoration: none;
+}
+
+.rac-info-value a:hover {
+  text-decoration: underline;
+}
+
+.rac-job-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rac-job-chip {
+  background: #f5f7fb;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.rac-job-chip-icon {
+  color: #fb246a;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.rac-job-chip span {
+  display: block;
+  color: #8b95a7;
+  font-size: 11px;
+}
+
+.rac-job-chip strong {
+  display: block;
+  color: #1a2340;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rac-footer {
+  background: #f3f6fb;
+  padding: 12px 22px;
+  display: flex;
+  justify-content: flex-end;
+  color: #8b95a7;
+  font-size: 13px;
+}
+
+.rac-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rac-footer svg {
+  color: #8b95a7;
+}
+
+.rac-footer strong {
+  color: #1a2340;
+}
+
+@media (max-width: 1100px) {
+  .rac-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rac-job-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .rac-header-right {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .rac-info-grid,
+  .rac-job-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .sj-cat {
   margin: 2px 0 4px;
   color: #fb246a;

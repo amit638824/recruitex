@@ -68,6 +68,13 @@ export const adminRecruiterListApi = async (token: any) => {
     return res?.data
 }
 
+export const adminAppliedJobListApi = async (token: any) => {
+    const res = await axios.get(`${baseUrl}/api/admin-applied-job`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res?.data
+}
+
 export const seekerAppliedJob = async (data:any,token: any) => {
     const res = await axios.post(`${baseUrl}/api/seeker-applied-job`,data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -86,5 +93,18 @@ export const getrecruterAppliedJobList = async (token: any) => {
     const res = await axios.get(`${baseUrl}/api/recruiter-applied-job`, {
         headers: { Authorization: `Bearer ${token}` },
     });
+    return res?.data
+}
+
+export const updateRecruiterAppliedJobStatus = async (
+    appliedId: string | number,
+    status: 'hired' | 'rejected' | 'pending',
+    token: any,
+) => {
+    const res = await axios.patch(
+        `${baseUrl}/api/recruiter-applied-job/${appliedId}/status`,
+        { status },
+        { headers: { Authorization: `Bearer ${token}` } },
+    );
     return res?.data
 }

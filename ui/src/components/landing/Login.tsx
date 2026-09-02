@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -20,18 +20,32 @@ const loginSchema = yup.object({
 type LoginFormValues = yup.InferType<typeof loginSchema>
 
 const Login = () => {
+  useEffect(() => {
+    let tem: any = localStorage.getItem('info')
+    const info = JSON.parse(tem);
+    setValue('email', info?.email)
+    setValue('password', info?.password)
+  }, [])
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: yupResolver(loginSchema),
 
   })
   const onSubmit = async (data: any) => {
+    if (data?.rememberMe) {
+      const raw = { email: data?.email, password: data?.password };
+      localStorage.setItem('info', JSON.stringify(raw))
+    }else{
+       localStorage.removeItem('info')
+    }
+   
     const res = await userLogin(data)
     if (res?.success) {
       dispatch(login(res?.result));

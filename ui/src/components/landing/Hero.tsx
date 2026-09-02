@@ -1,4 +1,4 @@
- 
+import Typewriter from 'typewriter-effect';
 const Hero = () => {
   return (
     <div className="slider-area">
@@ -14,11 +14,20 @@ const Hero = () => {
           <div className="row">
             <div className="col-xl-6 col-lg-9 col-md-10">
               <div className="hero__caption">
-                <h1>Find the most exciting startup jobs</h1>
+                <h1>
+                  Find the most exciting
+                  <Typewriter
+                    options={{
+                      strings: ['Startup jobs'],
+                      autoStart: true,
+                      loop: true,
+                    }}
+                  />
+                </h1>
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>

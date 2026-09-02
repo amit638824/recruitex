@@ -28,3 +28,4 @@ router.get("/seeker-dashboard", authMiddleware, seekerDashboard)
 router.post("/seeker-applied-job", authMiddleware, seekerAppliedJob)
 router.get("/seeker-applied-job", authMiddleware, getSeekerAppliedJob)
 export default router;
+ 

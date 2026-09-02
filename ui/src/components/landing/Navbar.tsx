@@ -1,11 +1,19 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { logOut } from '../../redux/slices/authSlice'
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const closeMenu = () => setOpen(false)
+  const data = useSelector((data: any) => data?.auth)
+  const handlelogOut = () => {
+    dispatch(logOut());
+    navigate('/')
+  }
 
   return (
     <header>
@@ -34,7 +42,7 @@ const Navbar = () => {
                         <li>
                           <NavLink to="/about" onClick={closeMenu}>About</NavLink>
                         </li>
-                         
+
                         <li>
                           <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
                         </li>
@@ -42,8 +50,17 @@ const Navbar = () => {
                     </nav>
                   </div>
                   <div className={`header-btn f-right ${open ? 'mobile-open' : 'd-none d-lg-block'}`}>
-                    <Link to="/register" className="btn head-btn1" onClick={closeMenu}>Register</Link>
-                    <Link to="/login" className="btn head-btn2" onClick={closeMenu}>Login</Link>
+
+                    {
+                      data?.token ?
+                        <>
+                          <button onClick={handlelogOut} className="btn head-btn1" >Logout</button>
+                        </> :
+                        <>
+                          <Link to="/register" className="btn head-btn1" onClick={closeMenu}>Register</Link>
+                          <Link to="/login" className="btn head-btn2" onClick={closeMenu}>Login</Link>
+                        </>
+                    }
                   </div>
                   <button type="button" className="mobile-menu-btn d-lg-none" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
                     {open ? <FaTimes /> : <FaBars />}

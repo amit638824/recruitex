@@ -22,7 +22,10 @@ import RecruiterUpdateProfile from './components/recruiter/UpdateProfile';
 import SeekerUpdateProfile from './components/seeker/UpdateProfile';
 import AdminJobList from './components/admin/AdminJobList';
 import AdminAppliedJob from './components/admin/AdminAppliedJob';
+import ProtectedRoute from './components/authGaurd/AuthGaurd';
+import NotFound from './components/landing/NotFound';
 function App() {
+
   return (
     <>
       <Routes>
@@ -33,24 +36,25 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         {/* admin */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/seekerlist" element={<SeekerList />} />
-        <Route path="/admin/recruiterlist" element={<RecruiterList />} />
-        <Route path="/admin/joblist" element={<AdminJobList />} />
-        <Route path="/admin/appliedjob" element={<AdminAppliedJob />} />
-        <Route path="/admin/profile" element={<AdminUpdateProfile />} />
+        <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/seekerlist" element={<ProtectedRoute><SeekerList /></ProtectedRoute>} />
+        <Route path="/admin/recruiterlist" element={<ProtectedRoute><RecruiterList /></ProtectedRoute>} />
+        <Route path="/admin/joblist" element={<ProtectedRoute><AdminJobList /></ProtectedRoute>} />
+        <Route path="/admin/appliedjob" element={<ProtectedRoute><AdminAppliedJob /></ProtectedRoute>} />
+        <Route path="/admin/profile" element={<ProtectedRoute><AdminUpdateProfile /></ProtectedRoute>} />
         {/* recruiter */}
-        <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
-        <Route path="/recruiter/PostJob" element={<PostJob />} />
-        <Route path="/recruiter/postedjob" element={<PostedJobs />} />
-        <Route path="/recruiter/appliedjob" element={<RecruiterAppliedJob />} />
-        <Route path="/recruiter/profile" element={<RecruiterUpdateProfile />} />
+        <Route path="/recruiter-dashboard" element={<ProtectedRoute><RecruiterDashboard /></ProtectedRoute>} />
+        <Route path="/recruiter/PostJob" element={<ProtectedRoute><PostJob /></ProtectedRoute>} />
+        <Route path="/recruiter/postedjob" element={<ProtectedRoute><PostedJobs /></ProtectedRoute>} />
+        <Route path="/recruiter/appliedjob" element={<ProtectedRoute><RecruiterAppliedJob /></ProtectedRoute>} />
+        <Route path="/recruiter/profile" element={<ProtectedRoute><RecruiterUpdateProfile /></ProtectedRoute>} />
         {/* seeker */}
-        <Route path="/seeker-dashboard" element={<SeekerDashboard />} />
-        <Route path="/seeker/jobapply" element={<JobApply />} />
-        <Route path="/seeker/appliedjob" element={<AppliedJob />} />
-        <Route path="/seeker/profile" element={<SeekerUpdateProfile />} />
-
+        <Route path="/seeker-dashboard" element={<ProtectedRoute><SeekerDashboard /></ProtectedRoute>} />
+        <Route path="/seeker/jobapply" element={<ProtectedRoute><JobApply /></ProtectedRoute>} />
+        <Route path="/seeker/appliedjob" element={<ProtectedRoute><AppliedJob /></ProtectedRoute>} />
+        <Route path="/seeker/profile" element={<ProtectedRoute><SeekerUpdateProfile /></ProtectedRoute>} />
+       //page not found
+        <Route path='*' element={<NotFound></NotFound>} />
       </Routes>
     </>
   )

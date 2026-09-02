@@ -1050,15 +1050,6 @@ body {
   color: inherit;
 }
 
-.sj-count {
-  background: #fb246a;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 4px 10px;
-}
-
 .sj-card {
   background: #fff;
   border-radius: 16px;
@@ -1097,51 +1088,6 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #1a2340;
-}
-
-.sj-section-label {
-  margin: 14px 0 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #8a94a6;
-}
-
-.sj-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: capitalize;
-  white-space: nowrap;
-}
-
-.sj-badge-pending {
-  background: #fff4e5;
-  color: #b76e00;
-}
-
-.sj-badge-hired {
-  background: #e8f8ef;
-  color: #1b7a45;
-}
-
-.sj-badge-reject {
-  background: #fdecec;
-  color: #c62828;
-}
-
-.sj-card-applied .sj-meta a {
-  color: #fb246a;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.sj-card-applied .sj-meta a:hover {
-  text-decoration: underline;
 }
 
 /* Recruiter Applied Candidate card */

@@ -37,6 +37,9 @@ export const seekerApplyJob = async (data: any, token: any) => {
     });
     return res?.data
 }
+
+/** Alias — same apply API */
+export const seekerAppliedJob = seekerApplyJob;
 export const seekerDashboardApi = async (token: any) => {
     const res = await axios.get(`${baseUrl}/api/seeker-dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -70,13 +73,6 @@ export const adminRecruiterListApi = async (token: any) => {
 
 export const adminAppliedJobListApi = async (token: any) => {
     const res = await axios.get(`${baseUrl}/api/admin-applied-job`, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-    return res?.data
-}
-
-export const seekerAppliedJob = async (data:any,token: any) => {
-    const res = await axios.post(`${baseUrl}/api/seeker-applied-job`,data, {
         headers: { Authorization: `Bearer ${token}` },
     });
     return res?.data

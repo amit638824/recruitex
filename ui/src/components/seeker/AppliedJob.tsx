@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 import {
   FaMapMarkerAlt,
   FaClock,
@@ -11,24 +10,7 @@ import {
 } from 'react-icons/fa'
 import Layout from '../layout/Layout'
 import { getseekerAppliedJobList } from '../../services/service'
-
-const UPLOAD_BASE = 'http://localhost:9000/uploads'
-
-const formatDate = (value: any) => {
-  if (!value) return '—'
-  return new Date(value).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
-}
-
-const statusClass = (status?: string) => {
-  const s = String(status || 'pending').toLowerCase()
-  if (s === 'hired' || s === 'hire') return 'rac-badge rac-badge-hired'
-  if (s === 'reject' || s === 'rejected') return 'rac-badge rac-badge-reject'
-  return 'rac-badge rac-badge-pending'
-}
+import { UPLOAD_BASE, formatDate, applicationStatusClass } from '../../utils/format'
 
 const AppliedJob = () => {
   const data: any = useSelector((state: any) => state.auth)
@@ -39,9 +21,7 @@ const AppliedJob = () => {
     const load = async () => {
       try {
         const res = await getseekerAppliedJobList(data?.token)
-        if (res?.success) {
-          setJobs(res.result || [])
-        }
+        if (res?.success) setJobs(res.result || [])
       } finally {
         setLoading(false)
       }
@@ -79,7 +59,7 @@ const AppliedJob = () => {
                       <FaBuilding /> {job.recruiter_name || 'Recruiter'}
                     </p>
                   </div>
-                  <span className={statusClass(appStatus)}>{appStatus}</span>
+                  <span className={applicationStatusClass(appStatus)}>{appStatus}</span>
                 </div>
 
                 <div className="sj-meta">
@@ -118,7 +98,6 @@ const AppliedJob = () => {
           )
         })
       )}
-      <ToastContainer position="top-right" autoClose={3000} />
     </Layout>
   )
 }

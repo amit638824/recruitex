@@ -52,21 +52,7 @@ export const getSeekerAppliedJob = async (req: any, res: any) => {
     }
 }
 
-export const seekerApplyJob = async (req: any, res: any) => {
-    try {
-        const seeker_id = req.user?.id || req.user?._id;
-        const { job_id } = req.body;
-        const isExist = await AppliedJobTbl.findOne({ where: { job_id, seeker_id } })
-        if (isExist) {
-            return createResponse(res, 409, false, "You already applied for this job", [])
-        }
-        const data = AppliedJobTbl.create({ job_id, seeker_id, status: "pending" })
-        const result = await data.save()
-        return createResponse(res, 201, true, "Applied successfully", result)
-    } catch (err) {
-        return createResponse(res, 500, false, "Internal Server error", [])
-    }
-}
+export const seekerApplyJob = seekerAppliedJob;
 
 export const seekerDashboard = async (req: any, res: any) => {
     try {

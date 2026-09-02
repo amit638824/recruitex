@@ -1,6 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 import {
   FaMapMarkerAlt,
   FaClock,
@@ -17,60 +16,8 @@ import {
 } from 'react-icons/fa'
 import Layout from '../layout/Layout'
 import { adminAppliedJobListApi } from '../../services/service'
-
-const UPLOAD_BASE = 'http://localhost:9000/uploads'
-
-const formatDate = (value: any) => {
-  if (!value) return '—'
-  return new Date(value).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
-}
-
-const statusClass = (status?: string) => {
-  const s = String(status || 'pending').toLowerCase()
-  if (s === 'hired' || s === 'hire') return 'rac-badge rac-badge-hired'
-  if (s === 'reject' || s === 'rejected') return 'rac-badge rac-badge-reject'
-  return 'rac-badge rac-badge-pending'
-}
-
-const InfoItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: ReactNode
-  label: string
-  value: ReactNode
-}) => (
-  <div className="rac-info-item">
-    <span className="rac-info-icon">{icon}</span>
-    <div>
-      <span className="rac-info-label">{label}</span>
-      <strong className="rac-info-value">{value}</strong>
-    </div>
-  </div>
-)
-
-const JobChip = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: ReactNode
-  label: string
-  value: ReactNode
-}) => (
-  <div className="rac-job-chip">
-    <span className="rac-job-chip-icon">{icon}</span>
-    <div>
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
-  </div>
-)
+import { UPLOAD_BASE, formatDate, applicationStatusClass } from '../../utils/format'
+import { InfoItem, JobChip } from '../shared/AppliedCardParts'
 
 const AdminAppliedJob = () => {
   const data: any = useSelector((state: any) => state.auth)
@@ -81,9 +28,7 @@ const AdminAppliedJob = () => {
     const load = async () => {
       try {
         const res = await adminAppliedJobListApi(data?.token)
-        if (res?.success) {
-          setApplications(res.result || [])
-        }
+        if (res?.success) setApplications(res.result || [])
       } finally {
         setLoading(false)
       }
@@ -96,9 +41,6 @@ const AdminAppliedJob = () => {
       <div className="dash-welcome">
         <h2 className="mb-0">Applied Jobs</h2>
       </div>
-      <p className="mb-3 text-muted" style={{ color: '#8b95a7' }}>
-        See which seeker applied on which job (all recruiters).
-      </p>
 
       {loading ? (
         <div className="dash-panel"><p className="mb-0">Loading...</p></div>
@@ -135,7 +77,7 @@ const AdminAppliedJob = () => {
                 </div>
 
                 <div className="rac-header-right">
-                  <span className={statusClass(appStatus)}>{appStatus}</span>
+                  <span className={applicationStatusClass(appStatus)}>{appStatus}</span>
                   <div className="rac-applied-date">
                     <FaCalendarAlt /> Applied on <strong>{formatDate(row.applied_at)}</strong>
                   </div>
@@ -184,7 +126,6 @@ const AdminAppliedJob = () => {
           )
         })
       )}
-      <ToastContainer position="top-right" autoClose={3000} />
     </Layout>
   )
 }

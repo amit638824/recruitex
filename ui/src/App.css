@@ -7,6 +7,16 @@
   --rx-input: #f7f8fc;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
 .header-area {
   position: sticky;
   top: 0;
@@ -415,21 +425,30 @@
   }
 }
 
-/* Dashboard layout */
+/* Dashboard layout — fixed sidebar, scroll only main content */
 .dash-wrap {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
   background: #f4f6fb;
 }
 
 .dash-sidebar {
   width: 260px;
+  height: 100vh;
+  max-height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
   background: #fff;
   border-right: 1px solid #eee;
   padding: 22px 16px 20px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .dash-brand {
@@ -464,6 +483,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .dash-link {
@@ -496,7 +519,7 @@
 }
 
 .dash-logout {
-  margin-top: auto;
+  margin-top: 8px;
 }
 
 .dash-cta {
@@ -524,6 +547,12 @@
 .dash-main {
   flex: 1;
   min-width: 0;
+  min-height: 0;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .dash-topbar {
@@ -533,6 +562,7 @@
   gap: 16px;
   padding: 12px 22px;
   border-bottom: 1px solid #eee;
+  flex-shrink: 0;
 }
 
 .dash-search {
@@ -636,6 +666,10 @@
 
 .dash-content {
   padding: 24px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .dash-welcome {

@@ -45,9 +45,8 @@ const RecruiterList = () => {
 
   return (
     <Layout>
-      <div className="dash-welcome d-flex align-items-center flex-wrap gap-2">
+      <div className="dash-welcome">
         <h2 className="mb-0">Recruiter List</h2>
-        <span className="sj-count">{users.length} Recruiters Found</span>
       </div>
 
       {loading ? (

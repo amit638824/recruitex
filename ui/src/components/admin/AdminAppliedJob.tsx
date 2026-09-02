@@ -93,9 +93,8 @@ const AdminAppliedJob = () => {
 
   return (
     <Layout>
-      <div className="dash-welcome d-flex align-items-center flex-wrap gap-2">
+      <div className="dash-welcome">
         <h2 className="mb-0">Applied Jobs</h2>
-        <span className="sj-count">{applications.length} Applications</span>
       </div>
       <p className="mb-3 text-muted" style={{ color: '#8b95a7' }}>
         See which seeker applied on which job (all recruiters).

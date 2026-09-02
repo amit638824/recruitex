@@ -79,9 +79,8 @@ const FindJob = () => {
       <PageHero title="Get your job" />
       <div className="job-listing-area pt-50 pb-50">
         <div className="container">
-          <div className="dash-welcome d-flex align-items-center flex-wrap gap-2">
+          <div className="dash-welcome">
             <h2 className="mb-0">All Jobs</h2>
-            <span className="sj-count">{jobs.length} Jobs Found</span>
           </div>
 
           {loading ? (
